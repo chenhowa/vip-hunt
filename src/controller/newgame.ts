@@ -195,8 +195,8 @@ function createAiStartingUnits() {
             console.error(corner + ' is an invalid corner in createAiStartingUnits!');
     }
 
-    const AiVip = AiGamePlay.constructUnit('VIP', x, z);
-    const AiTownHall = AiGamePlay.constructBuilding('TownHall', x + 2, z + 3 );
+    const AiVip = AiGamePlay.constructUnit('VIP', 5, 5);
+    const AiTownHall = AiGamePlay.constructBuilding('TownHall', 8, 8 );
 }
 
 // This funcion takes a GlobalGameState and attempts to add every Unit, Building,
