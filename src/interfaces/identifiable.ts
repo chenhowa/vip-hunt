@@ -1,5 +1,10 @@
-    interface IIdentifiable {
-        getId(): number;
-    }
+interface IIdentifiable {
+    getId(): number;
+}
 
-    export default IIdentifiable;
+interface Identifiable {
+    getId(): number; 
+}
+
+export { IIdentifiable, Identifiable };
+export default IIdentifiable;
