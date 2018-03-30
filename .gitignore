@@ -11,4 +11,5 @@ dist/js/custom_types/*
 src/controller/minimap/*
 *~
 coverage/*
+coverage/index.html
 .nyc_output/*
