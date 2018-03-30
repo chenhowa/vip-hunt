@@ -1,5 +1,6 @@
 import { GameUnit } from "../custom_types/game-unit";
 import { Coordinates2D } from "../custom_types/coordinates-2d";
+import { ObjectToUnitDecoder } from "../decoders/object-to-unit-decoder";
 
 class Unit
     implements
@@ -14,6 +15,22 @@ class Unit
         private interactionRange: number, private coordinates: Coordinates2D,
     ) { 
     
+    }
+
+    static fromObject(object: any) {
+        let decoder = new ObjectToUnitDecoder(object);
+        return new Unit(
+            decoder.getId(),
+            decoder.getOwnerId(),
+            decoder.getAttackPoints(),
+            decoder.getDefensePoints(),
+            decoder.getHealthPoints(),
+            decoder.getVisionRadius(),
+            decoder.getSpeedPoints(),
+            decoder.getAmountPerGather(),
+            decoder.getInteractionRange(),
+            decoder.getCoordinates2D()
+        );
     }
 
     getCoordinates2D() {
