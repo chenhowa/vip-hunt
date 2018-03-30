@@ -4,7 +4,7 @@
   "description": "OSU Capstone project. VIP-style RTS",
   "main": "main.js",
   "scripts": {
-    "test": "nyc mocha -r ts-node/register tests/*.spec.ts",
+    "test": "nyc mocha", 
     "lint": "tslint src/**/*.ts",
     "lint:fix": "tslint src/**/*.ts --fix",
     "live-reload": "live-reload --port 8000 dist/js/bundle.js",

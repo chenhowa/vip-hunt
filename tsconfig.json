@@ -13,7 +13,8 @@
         "emitDecoratorMetadata": true,
         "baseUrl": ".",
         "noImplicitUseStrict": true,
-        "noEmitOnError": true
+        "noEmitOnError": true,
+        "strictNullChecks": true
     },
     "include": [
         "src/**/*"
