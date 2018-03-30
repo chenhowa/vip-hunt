@@ -18,16 +18,17 @@
       ".ts",
       ".tsx"
     ],
-    "exclude": [
-      "**/*.d.ts"
-    ],
     "reporter": [
       "html"
     ],
     "exclude": [
         "dist",
         "src2",
-        "coverage"
+        "coverage",
+        "**/*.d.ts"
+    ],
+    "include": [
+        "src/**/*.ts"
     ],
     "all": true
   },
