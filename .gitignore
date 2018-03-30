@@ -10,3 +10,4 @@ dist/js/bindDependencies.*
 src/controller/minimap/*
 *~
 coverage/*
+.nyc_output/*
