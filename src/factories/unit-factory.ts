@@ -7,6 +7,7 @@ interface UnitFactory {
     makeGatherer(): GameUnit;
     makeSpearCalvary(): GameUnit;
     makeArcherCalvary(): GameUnit;
+    makeDrummerBoy(): GameUnit;
 }
 
 export { UnitFactory };

@@ -6,3 +6,5 @@ interface BuildingFactory {
     makeTower(): GameBuilding;
     makeTownHall(): GameBuilding;
 }
+
+export { BuildingFactory };
