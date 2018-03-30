@@ -5,7 +5,7 @@
 
 interface Damageable {
     getHealthPoints(): number;
-    takeDamage(attackPoints: number);
+    takeDamage(attackPoints: number): void;
 
 }
 

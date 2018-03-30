@@ -1,12 +1,13 @@
+import { Coordinates2D } from "../custom_types/coordinates-2d";
+
 interface ILocatable {
     getCoordinate(): number;
     setCoordinate(): number;
 }
 
-type Coordinate2D = [number, number];
 
 interface Locatable2D {
-    getCoordinate2D(): Coordinate2D; 
+    getCoordinates2D(): Coordinates2D; 
 }
 
 export { ILocatable, Locatable2D };

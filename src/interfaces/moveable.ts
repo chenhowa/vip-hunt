@@ -1,8 +1,9 @@
-type Coordinate2D = [number, number];
+import { Coordinates2D } from "../custom_types/coordinates-2d";
+
 
 interface Moveable {
-    move(coord: Coordinate2D );
-    getSpeed(): number;
+    move(coord: Coordinates2D );
+    getSpeedPoints(): number;
 }
 
 export { Moveable };
