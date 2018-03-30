@@ -24,6 +24,11 @@
     "reporter": [
       "html"
     ],
+    "exclude": [
+        "dist",
+        "src2",
+        "coverage"
+    ],
     "all": true
   },
   "keywords": [

@@ -5,7 +5,7 @@ import "sinon";
 import { Unit } from "../../src/model/unit";
 import { Coordinates2D } from "../../src/custom_types/coordinates-2d";
 
-describe("Random Tester for Unit GET functions", () => {
+describe("Random Tester for Unit functions", () => {
     /*
         TO create a random tester for unit GET functions, we declare the 
         max values on the random generate, generate a random Unit,
@@ -50,7 +50,7 @@ describe("Random Tester for Unit GET functions", () => {
 function testUnitCalculateFunctions(randomUnit) {
 
 
-    
+
 }
 
 function testUnitSideEffectFunctions(unit: Unit) {
