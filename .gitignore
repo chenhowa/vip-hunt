@@ -1,6 +1,8 @@
 node_modules/*
 dist/js/model/*
 dist/js/controller/*
+dist/js/factories/*
+dist/js/decoders/*
 dist/js/interfaces/*
 dist/js/enums/*
 dist/js/bundle.*
