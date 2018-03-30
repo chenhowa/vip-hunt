@@ -1,10 +1,10 @@
 import { GameBuilding } from "../custom_types/game-building";
 
-interface BuildingFactory {
+interface GameBuildingFactory {
     makeBarracks(): GameBuilding;
     makeStables(): GameBuilding;
     makeTower(): GameBuilding;
     makeTownHall(): GameBuilding;
 }
 
-export { BuildingFactory };
+export { GameBuildingFactory };

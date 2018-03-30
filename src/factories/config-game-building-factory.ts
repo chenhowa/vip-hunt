@@ -1,8 +1,8 @@
-import { BuildingFactory } from "../factories/building-factory";
+import { GameBuildingFactory } from "../factories/game-building-factory";
 import { Building } from "../model/building";
 import * as _ from "lodash";
 
-class ConfigBuildingFactory implements BuildingFactory {
+class ConfigBuildingFactory implements GameBuildingFactory {
     constructor(
                 private barracksProperties: any, private stablesProperties: any,
                 private towerProperties: any, private townHallProperties: any) {

@@ -1,6 +1,6 @@
 import { GameUnit } from "../custom_types/game-unit";
 
-interface UnitFactory {
+interface GameUnitFactory {
     makeSwordsman(): GameUnit;
     makeArcher(): GameUnit;
     makeVIP(): GameUnit;
@@ -10,4 +10,4 @@ interface UnitFactory {
     makeDrummerBoy(): GameUnit;
 }
 
-export { UnitFactory };
+export { GameUnitFactory };

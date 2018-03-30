@@ -1,9 +1,9 @@
-import { UnitFactory } from "../factories/unit-factory";
+import { GameUnitFactory } from "../factories/game-unit-factory";
 import { Unit } from "../model/unit";
 import { ObjectToUnitDecoder } from "../decoders/object-to-unit-decoder";
 import * as _ from "lodash";
 
-class ConfigUnitFactory implements UnitFactory {
+class ConfigUnitFactory implements GameUnitFactory {
     constructor(
         private swordsmanProperties: any, private archerProperties: any,
         private vipProperties: any, private gathererProperties: any,
