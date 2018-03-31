@@ -14,7 +14,8 @@
         "baseUrl": ".",
         "noImplicitUseStrict": true,
         "noEmitOnError": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "types": ["src/custom_types/wade.d.ts"]
     },
     "include": [
         "src/**/*"
