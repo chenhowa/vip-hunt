@@ -3,7 +3,7 @@ import { Unit } from "../model/unit";
 import { ObjectToUnitDecoder } from "../decoders/object-to-unit-decoder";
 import * as _ from "lodash";
 
-class ConfigUnitFactory implements GameUnitFactory {
+class GameUnitFactoryImp implements GameUnitFactory {
     constructor(
         private swordsmanProperties: any, private archerProperties: any,
         private vipProperties: any, private gathererProperties: any,
@@ -68,3 +68,5 @@ function hasAllUnitConfigProperties(
     });
     return true;
 }
+
+export { GameUnitFactoryImp };

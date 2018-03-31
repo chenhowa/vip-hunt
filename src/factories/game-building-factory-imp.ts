@@ -2,7 +2,7 @@ import { GameBuildingFactory } from "../factories/game-building-factory";
 import { Building } from "../model/building";
 import * as _ from "lodash";
 
-class ConfigBuildingFactory implements GameBuildingFactory {
+class GameBuildingFactoryImp implements GameBuildingFactory {
     constructor(
                 private barracksProperties: any, private stablesProperties: any,
                 private towerProperties: any, private townHallProperties: any) {
@@ -42,4 +42,4 @@ function hasAllBuildingConfigProperties(
     return true;
 }
 
-export { ConfigBuildingFactory };
+export { GameBuildingFactoryImp };
