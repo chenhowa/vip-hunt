@@ -15,6 +15,21 @@ class PlayerState implements Identifiable {
         return this.id;
     }
 
+    getUnit(id: number) {
+
+    }
+
+    getUnits() {
+        return this.units.values();
+    }
+
+    getBuilding(id: number) {
+
+    }
+    getBuildings() {
+        return this.buildings.values();
+    }
+
     insertUnit(unit: GameUnit) {
         this.units.set(unit.getId(), unit);
     }

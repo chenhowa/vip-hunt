@@ -1,11 +1,12 @@
 import { GameResource } from "../custom_types/game-resource";
 import * as _ from "lodash";
+import { ResourceType } from "../enums/resource-type";
 
 class Resource
     implements
         GameResource
 {
-    constructor(private id: number, private amount: number) {
+    constructor(private id: number, private amount: number, private type: ResourceType ) {
 
     }
 
@@ -18,7 +19,7 @@ class Resource
         */
 
         let newResource = Resource.default();
-        checkObjectHasRequiredProperties(object);
+        newResource.checkObjectHasRequiredProperties(object);
         newResource.setRequiredProperties(object);
         newResource.setOptionalProperties(object);
 
@@ -26,7 +27,11 @@ class Resource
     }
 
     static default() : Resource {
-        return new Resource(-1, -1);
+        return new Resource(-1, -1, ResourceType.Food);
+    }
+
+    getResourceType() {
+        return this.type;
     }
 
     getAmount() {
@@ -49,12 +54,16 @@ class Resource
     
     private setRequiredProperties(object: any) {
         this.amount = object.amount;
+        this.type = object.type;
     }
-}
 
-function checkObjectHasRequiredProperties(object: any) {
-    if( !_.has(object, "amount") ){
-        throw Error("Resource.fromObject: object does not have amount");
+    private checkObjectHasRequiredProperties(object: any) {
+        if( !_.has(object, "amount") ){
+            throw Error("Resource.fromObject: object does not have amount");
+        }
+        if( !_.has(object, "type") ) {
+            throw Error("Resource.fromObject: object does not have type");
+        }
     }
 }
 

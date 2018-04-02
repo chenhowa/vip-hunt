@@ -33,6 +33,13 @@ class ObjectToUnitDecoder {
         if(! _.has(object, 'coordinates')) {
             throw Error("ObjectToUnitDecoder: cannot decode coordinates");
         }
+        if(! _.has(object, 'type') ) {
+            throw Error("ObjectToUnitDecoder: cannot decode type");
+        }
+    }
+
+    getUnitType() {
+        return this.object.type;
     }
 
     getId(): number {

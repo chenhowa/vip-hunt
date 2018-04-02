@@ -7,10 +7,11 @@ import { Ranged } from "../interfaces/ranged";
 import { Sighted } from "../interfaces/sighted";
 import { Owned } from "../interfaces/owned";
 import { Locatable2D } from "../interfaces/locatable-2d";
+import { UnitTyped } from "../interfaces/unit-typed";
 
 type GameUnit =
     Attacker & Damageable & Identifiable & Moveable & Gatherer
-    & Ranged & Sighted & Owned & Locatable2D;
+    & Ranged & Sighted & Owned & Locatable2D & UnitTyped;
 
 
 export { GameUnit };

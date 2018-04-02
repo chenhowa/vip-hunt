@@ -7,9 +7,9 @@ import { Ranged } from "../interfaces/ranged";
 import { Sighted } from "../interfaces/sighted";
 import { Owned } from "../interfaces/owned";
 import { Locatable2D } from "../interfaces/locatable-2d";
+import { BuildingTyped } from "../interfaces/building-typed";
 
-type GameBuilding =
-    Attacker & Damageable & Identifiable & Locatable2D & Sighted & Owned
-    & Ranged;
+type GameBuilding = Attacker & Damageable & Identifiable & Locatable2D & Sighted & Owned
+    & Ranged & BuildingTyped;
 
 export { GameBuilding };

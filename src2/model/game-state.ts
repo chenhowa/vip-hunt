@@ -25,7 +25,7 @@ class GameState {
         return this.players.get(id);
     }
 
-    getPlayers() {
+    getAllPlayers() {
         return this.players.values();
     }
 

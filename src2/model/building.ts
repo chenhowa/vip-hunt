@@ -1,6 +1,7 @@
 import { GameBuilding } from "../custom_types/game-building";
 import { Coordinates2D } from "../custom_types/coordinates-2d";
 import { ObjectToBuildingDecoder } from "../decoders/object-to-building-decoder";
+import { BuildingType } from "../enums/building-type";
 
 class Building
     implements
@@ -12,7 +13,7 @@ class Building
         private healthPoints: number,
         private visionRadius: number,
         private interactionRange: number,
-        private coordinates: Coordinates2D, 
+        private coordinates: Coordinates2D, private type: BuildingType,
 
     ) {
     
@@ -33,8 +34,13 @@ class Building
             decoder.getHealthPoints(),
             decoder.getVisionRadius(),
             decoder.getInteractionRange(),
-            decoder.getCoordinates2D()
+            decoder.getCoordinates2D(),
+            decoder.getBuildingType(),
         );
+    }
+
+    getBuildingType() {
+        return this.type;
     }
 
     getId() {

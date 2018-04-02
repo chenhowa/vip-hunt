@@ -1,6 +1,7 @@
 import { GameUnit } from "../custom_types/game-unit";
 import { Coordinates2D } from "../custom_types/coordinates-2d";
 import { ObjectToUnitDecoder } from "../decoders/object-to-unit-decoder";
+import { UnitType } from "../enums/unit-type";
 
 class Unit
     implements
@@ -13,6 +14,7 @@ class Unit
         private healthPoints: number, private visionRadius: number,
         private speedPoints: number, private amountPerGather: number,
         private interactionRange: number, private coordinates: Coordinates2D,
+        private type: UnitType,
     ) { 
     
     }
@@ -29,8 +31,13 @@ class Unit
             decoder.getSpeedPoints(),
             decoder.getAmountPerGather(),
             decoder.getInteractionRange(),
-            decoder.getCoordinates2D()
+            decoder.getCoordinates2D(),
+            decoder.getUnitType()
         );
+    }
+
+    getUnitType() {
+        return this.type;
     }
 
     getCoordinates2D() {

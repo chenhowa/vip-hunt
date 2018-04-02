@@ -27,6 +27,13 @@ class ObjectToBuildingDecoder {
         if(! _.has(object, 'coordinates')) {
             throw Error("ObjectToBuildingDecoder: cannot decode coordinates");
         }
+        if(! _.has(object, 'type') ) {
+            throw Error("ObjectToBuildingDecoder: cannot decode type");
+        }
+    }
+
+    getBuildingType() {
+        return this.object.type;
     }
 
     getId(): number {
