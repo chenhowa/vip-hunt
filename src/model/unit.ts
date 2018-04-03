@@ -1,13 +1,13 @@
-import Damageable from "../interfaces/damageable";
-import Harvester from "../interfaces/harvester";
-import Damager from "../interfaces/damager";
-import Moveable from "../interfaces/moveable";
+
 import UnitStruct from "./unit-struct";
-import Harvestable from "../interfaces/harvestable";
 import Coordinates2D from "../custom_types/coordinates-2d";
+import AbstractUnit from "../custom_types/abstract-unit";
+import Damageable from "../interfaces/damageable";
+import Harvestable from "../interfaces/harvestable";
+import Ownable from "../interfaces/ownable";
 
-export default class Unit implements Damageable, Damager, Harvester, Moveable {
-
+export default class Unit implements AbstractUnit, Ownable {
+    private owner: AbstractPlayer;
     constructor(private properties: UnitStruct) {
 
     }

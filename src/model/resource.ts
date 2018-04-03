@@ -1,8 +1,8 @@
-import Harvestable from "../interfaces/harvestable";
 import ResourceStruct from "./resource-struct";
+import AbstractResource from "../custom_types/abstract-resource";
 
 
-export default class Resource implements Harvestable {
+export default class Resource implements AbstractResource {
     constructor( private properties: ResourceStruct ) {
 
     }
