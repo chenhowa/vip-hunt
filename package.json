@@ -22,8 +22,12 @@
       "html"
     ],
     "exclude": [
+        "src/custom_types",
+        "src/interfaces",
+        "src/enums",
         "dist",
         "src2",
+        "srcOld",
         "coverage",
         "**/*.d.ts"
     ],
