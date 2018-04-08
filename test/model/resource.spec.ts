@@ -4,11 +4,12 @@ import "sinon";
 import * as _ from "lodash";
 import ResourceStruct from "../../src/model/resource-struct";
 import Resource from "../../src/model/resource";
+import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
 
 describe("Resource class correctly", () => {
     let data = new ResourceStruct();
     data.amount = 500;
-    let resource = new Resource(data);
+    let resource = new Resource(0, new MockGamePlayHandler, data);
 
     it("gets harvested", () => {
         let preData = _.cloneDeep(data);

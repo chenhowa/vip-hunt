@@ -8,6 +8,7 @@ import BuildingStruct from "../../src/model/building-struct";
 import Building from "../../src/model/building";
 import UnitStruct from "../../src/model/unit-struct";
 import Unit from "../../src/model/unit";
+import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
 
 
 
@@ -16,7 +17,7 @@ describe("Building class correctly", () => {
     data.attackPoints = 20;
     data.healthPoints = 5;
     data.defensePoints = 15;
-    let building = new Building(data);
+    let building = new Building(0, new MockGamePlayHandler(), data);
 
     it("takes damage", () => {
         let preData = _.cloneDeep(data);
@@ -37,7 +38,7 @@ describe("Building class correctly", () => {
         unitData.attackPoints = 2;
         unitData.defensePoints = 5;
         unitData.healthPoints = 3;
-        let unit = new Unit(unitData);
+        let unit = new Unit(0, new MockGamePlayHandler, unitData);
 
         let takeDamageSpy = spy(unit, 'takeDamage');
 

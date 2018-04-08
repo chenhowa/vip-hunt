@@ -10,43 +10,44 @@ import ResourceStruct from "../../src/model/resource-struct";
 import Resource from "../../src/model/resource";
 import BuildingStruct from "../../src/model/building-struct";
 import Building from "../../src/model/building";
+import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
+import MoveRequest from "../../src/model/move-request";
+
+let unitData: UnitStruct;
+let preUnitData: UnitStruct;
+let unit: Unit;
 
 
 
 describe( "Unit class correctly", () => {
-    let data = new UnitStruct();
-    data.attackPoints = 5;
-    data.healthPoints = 10;
-    data.amountPerGather = 15;
-    data.defensePoints = 12;
-    let unit = new Unit(data);
 
     it("takes damage", () => {
-        let preData = _.cloneDeep(data);
+        givenInitialUnit();
+        unitTakesDamage(5);
+        expect(unitData).to.eql(preUnitData);
 
-        let damage = 5;
-        unit.takeDamage(damage);
-        preData.healthPoints -= damage;
-        expect(data).to.eql(preData);
-
-        damage = -10;
-        unit.takeDamage(damage);
-        preData.healthPoints -= damage;
-        expect(data).to.eql(preData);
+        givenInitialUnit();
+        unitTakesDamage(-10);
+        expect(unitData).to.eql(preUnitData);
     });
 
-    it("deals damage", () => {
-        let buildingData = new BuildingStruct();
-        let building = new Building(buildingData);
-        let preBuildingData = _.cloneDeep(buildingData);
-        let preData = _.cloneDeep(data);
+    function unitTakesDamage(damage: number) {
+        unit.takeDamage(damage);
+        preUnitData.healthPoints -= damage;
+    }
 
+    it("deals damage", () => {
+        givenInitialUnit();
+
+        let buildingData = new BuildingStruct();
+        let building = new Building(0, new MockGamePlayHandler, buildingData);
+        let preBuildingData = _.cloneDeep(buildingData);
         let takeDamageSpy = spy(building, 'takeDamage');
 
         unit.dealDamage(building);
-        preBuildingData.healthPoints -= preData.attackPoints;
+        preBuildingData.healthPoints -= preUnitData.attackPoints;
         expect(buildingData).to.eql(preBuildingData);
-        expect(data).to.eql(preData);
+        expect(unitData).to.eql(preUnitData);
 
         expect(takeDamageSpy.callCount).to.eql(1);
 
@@ -54,28 +55,50 @@ describe( "Unit class correctly", () => {
     })
 
     it("moves", () => {
-        let preData = _.cloneDeep(data);
+        givenInitialUnit();
+
         let newCoordinates: Coordinates2D = [10, 5];
         
         unit.move(newCoordinates);
-        preData.coordinates = newCoordinates;
-        expect(data).to.eql(preData);
+        preUnitData.coordinates = newCoordinates;
+        expect(unitData).to.eql(preUnitData);
     });
 
     it("harvests", () => {
+        givenInitialUnit();
         let resourceData = new ResourceStruct();
-        let resource = new Resource(resourceData);
+        let resource = new Resource(0, new MockGamePlayHandler, resourceData);
         let preResourceData = _.cloneDeep(resourceData);
-        let preData = _.cloneDeep(data);
 
         let getHarvestedBySpy = spy(resource, 'getHarvestedBy');
 
         unit.harvest(resource);
-        preResourceData.amount -= preData.amountPerGather;
+        preResourceData.amount -= preUnitData.amountPerGather;
         expect(resourceData).to.eql(preResourceData);
-        expect(preData).to.eql(data);
+        expect(preUnitData).to.eql(unitData);
 
         expect(getHarvestedBySpy.callCount).to.eql(1);
         getHarvestedBySpy.restore();
     });
+
+    it("handles move requests", () => {
+        givenInitialUnit();
+        let newCoordinates: Coordinates2D = [-50, -50];
+        let request = new MoveRequest(newCoordinates);
+
+        unit.handleRequest(request);
+        preUnitData.coordinates = newCoordinates;
+
+        expect(preUnitData).to.eql(unitData);
+    })
 } );
+
+function givenInitialUnit() {
+    unitData = new UnitStruct();
+    unitData.attackPoints = 5;
+    unitData.healthPoints = 10;
+    unitData.amountPerGather = 15;
+    unitData.defensePoints = 12;
+    unit = new Unit(0, new MockGamePlayHandler, unitData);
+    preUnitData = _.cloneDeep(unitData);
+}
