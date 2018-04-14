@@ -5,12 +5,13 @@ import AbstractBuilding from "../../src/custom_types/abstract-building";
 import MockAbstractUnit from "./mock-abstract-unit";
 import MockAbstractBuilding from "./mock-abstract-building";
 import Damageable from "../../src/interfaces/damageable";
+import Drawable from "../../src/interfaces/drawable";
 
 
 
 
 export default class MockAbstractPlayer
-    implements AbstractPlayer, Identifiable {
+    implements AbstractPlayer, Identifiable, Drawable {
     
     constructor(private id: number) {
 
@@ -37,7 +38,7 @@ export default class MockAbstractPlayer
     }
 
     getUnit(id: number) {
-        return new MockAbstractUnit(id);
+        return new MockAbstractUnit();
     }
 
     getBuilding(id: number) {
@@ -46,5 +47,17 @@ export default class MockAbstractPlayer
 
     dealDamage(target: Damageable) {
 
+    }
+
+    render() {
+        
+    }
+
+    chaseAndAttackTarget() {
+
+    }
+
+    chaseAndGatherTarget() {
+        
     }
 }

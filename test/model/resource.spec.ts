@@ -2,7 +2,7 @@ import { expect } from "chai";
 import "mocha";
 import "sinon";
 import * as _ from "lodash";
-import ResourceStruct from "../../src/model/resource-struct";
+import ResourceStruct from "../../src/model/data/resource-struct";
 import Resource from "../../src/model/resource";
 import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
 

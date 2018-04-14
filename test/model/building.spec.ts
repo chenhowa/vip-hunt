@@ -4,54 +4,70 @@ import { spy } from "sinon";
 import * as _ from "lodash";
 
 
-import BuildingStruct from "../../src/model/building-struct";
+import BuildingStruct from "../../src/model/data/building-struct";
 import Building from "../../src/model/building";
-import UnitStruct from "../../src/model/unit-struct";
-import Unit from "../../src/model/unit";
 import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
+import MockAbstractUnit from "../mocks/mock-abstract-unit";
 
-
+let buildingData: BuildingStruct;
+let building: Building;
+let copyData: BuildingStruct;
+let unit: MockAbstractUnit;
 
 describe("Building class correctly", () => {
-    let data = new BuildingStruct();
-    data.attackPoints = 20;
-    data.healthPoints = 5;
-    data.defensePoints = 15;
-    let building = new Building(0, new MockGamePlayHandler(), data);
 
-    it("takes damage", () => {
-        let preData = _.cloneDeep(data);
+    it("takes positive damage", () => {
+        givenNewBuilding();
+        buildingTakesDamage(20);
+        checkDamageWasDone();
+    });
 
-        let damage = 20;
+    function buildingTakesDamage(damage: number) {
         building.takeDamage(damage);
-        preData.healthPoints -= damage;
-        expect(data).to.eql(preData);
+        copyData.healthPoints -= damage;
+    }
 
-        damage = -5;
-        building.takeDamage(damage);
-        preData.healthPoints -= damage;
-        expect(data).to.eql(preData);
+    function checkDamageWasDone() {
+        expect(copyData).to.eql(buildingData);
+    }
+
+    it("takes negative damage", () => {
+        givenNewBuilding();
+        buildingTakesDamage(-5);
+        checkDamageWasDone();
     });
 
     it("deals damage", () => {
-        let unitData = new UnitStruct();
-        unitData.attackPoints = 2;
-        unitData.defensePoints = 5;
-        unitData.healthPoints = 3;
-        let unit = new Unit(0, new MockGamePlayHandler, unitData);
+        givenNewBuildingAndUnit();
+        let expected = unit.hp;
+        buildingDealsDamageToUnit();
+        checkDamageWasDealt(expected);
+    });
 
-        let takeDamageSpy = spy(unit, 'takeDamage');
+    function givenNewBuildingAndUnit() {
+        givenNewBuilding();
+        givenMockUnit();
+    }
 
-        let preUnitData = _.cloneDeep(unitData);
-        let preData = _.cloneDeep(data);
+    function buildingDealsDamageToUnit() {
         building.dealDamage(unit);
-        preUnitData.healthPoints -= preData.attackPoints;
-        expect(preUnitData).to.eql(unitData);
-        expect(preData).to.eql(data);
+    }
 
-        expect(takeDamageSpy.callCount).to.eql(1);
-
-        takeDamageSpy.restore();
-
-    })
+    function checkDamageWasDealt(expected: number) {
+        expect(unit.hp).to.eql(expected - buildingData.attackPoints);
+    }
 });
+
+function givenNewBuilding() {
+    buildingData = new BuildingStruct();
+    buildingData.attackPoints = 20;
+    buildingData.healthPoints = 5;
+    buildingData.defensePoints = 15;
+    building = new Building(0, new MockGamePlayHandler(), buildingData);
+
+    copyData = _.cloneDeep(buildingData);
+}
+
+function givenMockUnit() {
+    unit = new MockAbstractUnit();
+}

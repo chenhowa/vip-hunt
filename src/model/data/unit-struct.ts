@@ -1,6 +1,6 @@
 
-import Coordinates2D from "../custom_types/coordinates-2d";
-import UnitType from "../enums/unit-type";
+import Coordinates2D from "../../custom_types/coordinates-2d";
+import UnitType from "../../enums/unit-type";
 
 export default class UnitStruct {
     public id: number = -1;

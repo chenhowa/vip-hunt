@@ -1,5 +1,5 @@
 
-import UnitStruct from "./unit-struct";
+import UnitStruct from "./data/unit-struct";
 import Coordinates2D from "../custom_types/coordinates-2d";
 import AbstractUnit from "../custom_types/abstract-unit";
 import Damageable from "../interfaces/damageable";
@@ -10,10 +10,20 @@ import Identifiable from "../interfaces/identifiable";
 import GamePlayRequestType from "../enums/gameplay-request-type";
 import MoveRequest from "./move-request";
 import DieRequest from "./die-request";
+import Drawable from "../interfaces/drawable";
+import AbstractRepresentation from "../interfaces/abstract-representation";
+import AbstractRepresentationFactory from "../interfaces/abstract-representation-factory";
 
-export default class Unit implements AbstractUnit, GamePlayHandler, Identifiable {
+export default class Unit implements AbstractUnit, GamePlayHandler, Identifiable, Drawable {
+    private rep: AbstractRepresentation;
+    private factory: AbstractRepresentationFactory;
+
     constructor(private id: number, private player: GamePlayHandler, private properties: UnitStruct) {
 
+    }
+
+    setFactory(factory: AbstractRepresentationFactory) {
+        this.factory = factory;
     }
 
     handleRequest(request: GamePlayRequest) {
@@ -47,6 +57,10 @@ export default class Unit implements AbstractUnit, GamePlayHandler, Identifiable
 
     move( newLocation: Coordinates2D) {
         this.properties.coordinates = newLocation;
+    }
+
+    render() {
+        this.rep = this.factory.make(this.properties.type, this);
     }
 
 }

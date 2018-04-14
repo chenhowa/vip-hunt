@@ -1,4 +1,4 @@
-import ResourceType from "../enums/resource-type";
+import ResourceType from "../../enums/resource-type";
 
 class ResourceStruct {
     id: number = -1;

@@ -3,12 +3,12 @@ import "mocha";
 import { spy } from "sinon";
 import * as _ from "lodash";
 
-import UnitStruct from "../../src/model/unit-struct";
+import UnitStruct from "../../src/model/data/unit-struct";
 import Unit from "../../src/model/unit";
 import Coordinates2D from "../../src/custom_types/coordinates-2d";
-import ResourceStruct from "../../src/model/resource-struct";
+import ResourceStruct from "../../src/model/data/resource-struct";
 import Resource from "../../src/model/resource";
-import BuildingStruct from "../../src/model/building-struct";
+import BuildingStruct from "../../src/model/data/building-struct";
 import Building from "../../src/model/building";
 import MockGamePlayHandler from "../mocks/mock-gameplay-handler";
 import MoveRequest from "../../src/model/move-request";

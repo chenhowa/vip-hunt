@@ -8,8 +8,9 @@ import Identifiable from "../../src/interfaces/identifiable";
 
 
 export default class MockAbstractUnit implements AbstractUnit, Identifiable {
-
-    constructor(private id: number) {
+    public hp: number = 100;
+    public id: 100;
+    constructor() {
 
     }
 
@@ -18,7 +19,7 @@ export default class MockAbstractUnit implements AbstractUnit, Identifiable {
     }
 
     takeDamage(damage: number) {
-
+        this.hp -= damage;
     }
 
     harvest(target: Harvestable) {

@@ -10,7 +10,7 @@ import MockAbstractBuilding from "../mocks/mock-abstract-building";
 import AbstractUnit from "../../src/custom_types/abstract-unit";
 import Identifiable from "../../src/interfaces/identifiable";
 import AbstractBuilding from "../../src/custom_types/abstract-building";
-import DieRequest from "../../src/model/die-request";
+import DieRequest from "../../src/model/requests/die-request";
 
 let player: Player;
 let gameUnit: (AbstractUnit | AbstractBuilding);
@@ -78,7 +78,7 @@ describe("Player class correctly", () => {
     });
 
     function playerHandlesUnitDieRequest() {
-        let request = DieRequest.forUnit(defaultUnitId);
+        let request = DieRequest.forUnit();
         player.handleRequest(request);
     }
 
@@ -87,7 +87,7 @@ describe("Player class correctly", () => {
     }
 
     function playerHandlesBuildingDieRequest() {
-        let request = DieRequest.forBuilding(defaultBuildingId);
+        let request = DieRequest.forBuilding();
         player.handleRequest(request);
     }
 
@@ -118,7 +118,7 @@ describe("Player class correctly", () => {
     }
 
     function playerAttacksUnit() {
-        let unit = new MockAbstractUnit(defaultUnitId);
+        let unit = new MockAbstractUnit();
         unitSpy = spy(player.getUnit(defaultUnitId), 'dealDamage');
         player.dealDamage(unit);
     }
@@ -127,7 +127,7 @@ describe("Player class correctly", () => {
 
 function givenInitialPlayer() {
     player = new Player(0, new MockGamePlayHandler);
-    player.addUnit(new MockAbstractUnit(defaultUnitId));
+    player.addUnit(new MockAbstractUnit());
     player.addBuilding(new MockAbstractBuilding(defaultBuildingId));
     player.setActiveUnit(defaultUnitId);
 }

@@ -3,20 +3,50 @@ import AbstractBuilding from "../custom_types/abstract-building";
 import GamePlayHandler from "../interfaces/gameplay-handler";
 import GamePlayRequest from "../interfaces/gameplay-request";
 import GamePlayRequestType from "../enums/gameplay-request-type";
-import DieRequest from "./die-request";
-import AttackRequest from "./attack-request";
+import DieRequest from "./requests/die-request";
+import AttackRequest from "./requests/attack-request";
 import Identifiable from "../interfaces/identifiable";
 import Damageable from "../interfaces/damageable";
 import AbstractPlayer from "../interfaces/abstract-player";
+import Drawable from "../interfaces/drawable";
 
-export default class Player implements AbstractPlayer, GamePlayHandler, Identifiable {
-    private units: Map<number, AbstractUnit> = new Map();
-    private buildings: Map<number, AbstractBuilding> = new Map();
+export default class Player implements AbstractPlayer, GamePlayHandler, Identifiable, Drawable {
+    private units: Map<number, AbstractUnit & Drawable> = new Map();
+    private buildings: Map<number, AbstractBuilding & Drawable> = new Map();
 
     private activeGameObject: AbstractUnit | AbstractBuilding | null;
 
     constructor(private id: number, private game: GamePlayHandler) {
         this.activeGameObject = null;
+    }
+
+    render() {
+        this.renderUnits();
+        this.renderBuildings();
+    }
+
+    private renderUnits() {
+        let iterator = this.units.values();
+        while(true) {
+            let result = iterator.next();
+            if(result.done) {
+                break;
+            }
+            let unit = result.value;
+            unit.render();
+        }
+    }
+
+    private renderBuildings() {
+        let iterator = this.buildings.values();
+        while(true) {
+            let result = iterator.next();
+            if(result.done) {
+                break;
+            }
+            let building = result.value;
+            building.render();
+        }
     }
 
     hasUnits() {
@@ -27,11 +57,11 @@ export default class Player implements AbstractPlayer, GamePlayHandler, Identifi
         return this.buildings.size !== 0;
     }
 
-    addUnit(unit: AbstractUnit & Identifiable) {
+    addUnit(unit: AbstractUnit & Identifiable & Drawable) {
         this.units.set(unit.getId(), unit);
     }
 
-    addBuilding(building: AbstractBuilding & Identifiable) {
+    addBuilding(building: AbstractBuilding & Identifiable & Drawable) {
         this.buildings.set(building.getId(), building);
     }
 
@@ -85,10 +115,6 @@ export default class Player implements AbstractPlayer, GamePlayHandler, Identifi
             catch (e) {
                 console.error(e);
             }
-        }
-        else if (kind === GamePlayRequestType.Attack && request instanceof AttackRequest ) {
-            request.targetPlayerId = this.id;
-            this.game.handleRequest(request);
         }
         else {
             this.game.handleRequest(request);

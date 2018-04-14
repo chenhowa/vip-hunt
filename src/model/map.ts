@@ -1,7 +1,8 @@
 
 import * as _ from "lodash";
 
-import TileStruct from "./tile-struct";
+import TileStruct from "./data/tile-struct";
+import Coordinates2D from "../custom_types/coordinates-2d";
 
 
 export default class Map {
@@ -10,12 +11,25 @@ export default class Map {
 
     }
 
-    clear() {
+    clearAll() {
         _.forEach(this.tileGrid, (column) => {
             _.forEach(column, (tile) => {
                 tile.occupied = false;
                 tile.walkable = true;
             })
         })
+    }
+
+    clear(coord: Coordinates2D) {
+        let tile = this.tileGrid[coord[0]][coord[1]];
+        tile.occupied = false;
+        tile.walkable = true;
+    }
+
+    isClear(coord: Coordinates2D) {
+
+        let tile = this.tileGrid[coord[0]][coord[1]];
+
+        return tile.walkable && !tile.occupied;
     }
 }

@@ -1,5 +1,5 @@
-import Coordinates2D from "../../src/custom_types/coordinates-2d";
-import BuildingType from "../../src/enums/building-type";
+import Coordinates2D from "../../../src/custom_types/coordinates-2d";
+import BuildingType from "../../../src/enums/building-type";
 
 
 class BuildingStruct {

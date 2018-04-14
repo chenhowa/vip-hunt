@@ -9,6 +9,7 @@ enum GamePlayRequestType {
     Attack,
     Win,
     Lose,
+    Gather,
 
 }
 

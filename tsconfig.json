@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["es6", "dom"],
-        "types": ["reflect-metadata"],
+        "types": ["reflect-metadata", "src/custom_types/wade.d.ts"],
         "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "dist/js",
@@ -14,8 +14,7 @@
         "baseUrl": ".",
         "noImplicitUseStrict": true,
         "noEmitOnError": true,
-        "strictNullChecks": true,
-        "types": ["src/custom_types/wade.d.ts"]
+        "strictNullChecks": true
     },
     "include": [
         "src/**/*"
