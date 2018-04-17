@@ -22,11 +22,11 @@
       "html"
     ],
     "exclude": [
-      "src/custom_types",
-      "src/interfaces",
-      "src/enums",
       "dist",
+      "src/model/interfaces",
+      "src/model/types",
       "src2",
+      "src3",
       "srcOld",
       "coverage",
       "**/*.d.ts"

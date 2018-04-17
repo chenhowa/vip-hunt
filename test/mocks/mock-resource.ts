@@ -1,15 +1,14 @@
-import AbstractResource from "../../src/custom_types/abstract-resource";
-import Identifiable from "../../src/interfaces/identifiable";
-import Drawable from "../../src/interfaces/drawable";
-import Harvester from "../../src/interfaces/harvester";
+import * as _ from "lodash";
 
+import Resource from "../../src/model/interfaces/resource";
+import Damageable from "../../src/model/interfaces/damageable";
+import Coordinates2D from "../../src/model/types/coodinates-2d";
 
+export default class MockResource implements Resource {
 
-export default class MockResource implements AbstractResource, Identifiable, Drawable {
-    public amount: number = 50;
-    public id: number = 20;
+    private location: Coordinates2D
 
-    constructor() {
+    constructor(private id: number) {
 
     }
 
@@ -17,11 +16,23 @@ export default class MockResource implements AbstractResource, Identifiable, Dra
 
     }
 
-    getHarvestedBy(amountToHarvest: number) {
-        this.amount -= amountToHarvest;
+    dealDamage(target: Damageable) {
+
     }
 
-    getId() {
-        return this.id;
+    harvest(amount: number) {
+
+    }
+
+    move(location: Coordinates2D) {
+
+    }
+
+    isAt(locatioon: Coordinates2D) {
+        return _.isEqual(this.location, location);
+    }
+
+    hasId(id: number) {
+        return this.id === id;
     }
 }
