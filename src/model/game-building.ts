@@ -2,6 +2,7 @@ import Building from "./interfaces/building";
 import Damageable from "./interfaces/damageable";
 import Harvestable from "./interfaces/harvestable";
 import Coordinates2D from "./types/coodinates-2d";
+import Representation from "../view/interfaces/representation";
 
 
 
@@ -10,6 +11,8 @@ export default class GameBuilding implements Building {
     private health = 0;
     private amountToHarvest = 1;
     private location: Coordinates2D = [0, 0];
+
+    public rep: Representation;
 
     constructor(private id: number) {
 

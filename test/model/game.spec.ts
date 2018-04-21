@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import "sinon";
+import * as sinon from "sinon";
 
 import Game from "../../src/model/game";
 import MockGameMemento from "../mocks/mock-game-memento";
@@ -12,6 +12,8 @@ import ResourceRemoveRequest from "../../src/model/requests/resource-remove-requ
 import PlayerRemoveRequest from "../../src/model/requests/player-remove-request";
 import MockResource from "../mocks/mock-resource";
 import MockPlayer from "../mocks/mock-player";
+import UnitToUnitAttackRequest from "../../src/model/requests/unit-to-unit-attack-request";
+import UnitToBuildingAttackRequest from "../../src/model/requests/unit-to-building-attack-request";
 
 describe("Game class unit test", () => {
     it("instantiates", () => {
@@ -167,5 +169,43 @@ describe("Game class unit test", () => {
         expect(function() {
             game.addPlayer(new MockPlayer(1), 2)
         }).to.throw();
+    });
+
+    it("organizes chase attack between units when it receives the request", () => {
+        let game = Game.withPlayers(10, 3);
+        let mockAttacker = new MockUnit(1);
+        let mockTarget = new MockUnit(2);
+        game.addUnit(mockAttacker, 1);
+        game.addUnit(mockTarget, 2);
+
+        let req = new UnitToUnitAttackRequest();
+        req.attackerId = 1;
+        req.targetId = 2;
+
+        var chase = sinon.spy(mockAttacker.rep, "chase");
+        game.handle(req);
+
+        expect(chase.callCount).to.be.eql(1);
+
+        chase.restore();
+    });
+
+    it("organizes chase attack between unit and building when it receives the request", () => {
+        let game = Game.withPlayers(10, 3);
+        let mockAttacker = new MockUnit(1);
+        let mockTarget = new MockUnit(2);
+        game.addUnit(mockAttacker, 1);
+        game.addBuilding(mockTarget, 2);
+
+        let req = new UnitToBuildingAttackRequest();
+        req.attackerId = 1;
+        req.targetId = 2;
+
+        var chase = sinon.spy(mockAttacker.rep, "chase");
+        game.handle(req);
+
+        expect(chase.callCount).to.be.eql(1);
+
+        chase.restore();
     });
 });

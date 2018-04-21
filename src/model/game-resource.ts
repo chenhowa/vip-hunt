@@ -3,6 +3,7 @@ import Damageable from "./interfaces/damageable";
 import Coordinates2D from "./types/coodinates-2d";
 
 import * as _ from "lodash";
+import Representation from "../view/interfaces/representation";
 
 
 
@@ -10,6 +11,7 @@ export default class GameResource implements Resource {
     private damage = 1;
     private amount = 0;
     private location: Coordinates2D = [0, 0];
+    public rep: Representation;
 
     constructor(private id: number) {
 

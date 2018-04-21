@@ -3,10 +3,14 @@ import * as _ from "lodash";
 import Resource from "../../src/model/interfaces/resource";
 import Damageable from "../../src/model/interfaces/damageable";
 import Coordinates2D from "../../src/model/types/coodinates-2d";
+import Representation from "../../src/view/interfaces/representation";
+import MockWadeRepresentation from "./mock-wade-representation";
+import MockSceneObject from "./mock-scene-object";
 
 export default class MockResource implements Resource {
 
     private location: Coordinates2D
+    public rep: Representation = new MockWadeRepresentation(new MockSceneObject());
 
     constructor(private id: number) {
 

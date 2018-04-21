@@ -13,6 +13,8 @@ import PlayerRemoveRequest from "./requests/player-remove-request";
 import { assertExpectedEqualsActual, assertTrue } from "../utils/assert";
 import IdGenerator from "../utils/id-generator";
 import GamePlayer from "./game-player";
+import UnitToUnitAttackRequest from "./requests/unit-to-unit-attack-request";
+import UnitToBuildingAttackRequest from "./requests/unit-to-building-attack-request";
 
 export default class Game implements RequestHandler{
     private activePlayerId: number;
@@ -94,9 +96,39 @@ export default class Game implements RequestHandler{
         else if (req.getKind() === RequestKind.PlayerRemove && req instanceof PlayerRemoveRequest) {
             this.players.delete(req.getId() );
         }
+        else if (req.getKind() === RequestKind.UnitToUnitAttack && req instanceof UnitToUnitAttackRequest) {
+            let attacker = this.getUnit(req.attackerId).rep;
+            let target = this.getUnit(req.targetId).rep;
+
+            attacker.chase(target);
+        }
+        else if (req.getKind() === RequestKind.UnitToBuildingAttack && req instanceof UnitToBuildingAttackRequest) {
+            let attacker = this.getUnit(req.attackerId).rep;
+            let target = this.getBuilding(req.targetId).rep;
+            attacker.chase(target);
+        }
         else {
 
         }
+    }
+
+    private getUnit(id: number) {
+        let unit = this.units.get(id)
+
+        if(unit === undefined) {
+            throw Error("Tried to get undefined unit with id " + id);
+        } 
+
+        return unit;
+    }
+
+    private getBuilding(id: number) {
+        let building = this.buildings.get(id);
+        if(building === undefined) {
+            throw Error("Tried to get undefined building with id " + id);
+        }
+
+        return building;
     }
 
     addBuilding(building: Building, id: number) {
