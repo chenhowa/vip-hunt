@@ -105,7 +105,7 @@ describe("UnitRepresentation class unit test", () => {
         let clock = sinon.useFakeTimers();
 
         // According to the source of UnitRepresentation,
-        // location is updated every 800 ms or so.
+        // during a chase, location is updated every 300 ms or so.
         // Clock tick times are designed to work with this.
         rep.chase(target);
         clock.tick(900);

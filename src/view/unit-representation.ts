@@ -54,6 +54,9 @@ export default class UnitRepresentation extends WadeRepresentation {
                     this.updateLocation(coords);
                 }
                 else {
+                    // TODO - figure out a better way to unsubscribe.
+                    // How to unsubscribe only when target location is
+                    //reached?
                     this.moveSubscription.unsubscribe();
                 }
             },
