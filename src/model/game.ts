@@ -11,35 +11,47 @@ import Player from "./interfaces/player";
 
 import PlayerRemoveRequest from "./requests/player-remove-request";
 import { assertExpectedEqualsActual, assertTrue } from "../utils/assert";
+import IdGenerator from "../utils/id-generator";
+import GamePlayer from "./game-player";
 
 export default class Game implements RequestHandler{
-    private numPlayers: number;
     private activePlayerId: number;
     private units: Map<number, Unit> = new Map();
     private buildings: Map<number, Building> = new Map();
     private resources: Map<number, Resource> = new Map();
     private players: Map<number, Player> = new Map();
 
+    private playerIdGenerator = new IdGenerator();
+
     static withPlayers(numPlayers: number, activePlayerId: number) {
         let game = new Game();
-        game.numPlayers = numPlayers;
         game.activePlayerId = activePlayerId;
 
         assertTrue(numPlayers >= 0, "Game.withPlayers error: numPlayers < 0");
         assertTrue(activePlayerId < numPlayers, "Game.withPlayers: activePlayerId >= numPlayers");
         assertTrue(activePlayerId >= 0, "Game.withPlayers: activePlayerId < 0");
 
+        for(let i = 0; i < numPlayers; i++) {
+            let id = game.playerIdGenerator.getId();
+            game.addPlayer(new GamePlayer(id), id);
+        }
+
         return game;
     }
 
     static fromMemento(memento: GameMemento) {
         let game = new Game();
-        game.numPlayers = memento.numPlayers;
+        let numPlayers = memento.numPlayers;
         game.activePlayerId = memento.activePlayerId;
 
         assertTrue(memento.numPlayers >= 0, "Game.fromMemento error: numPlayers < 0");
         assertTrue(memento.activePlayerId < memento.numPlayers, "Game.fromMemento error: activePlayerId >= numPlayers");
         assertTrue(memento.activePlayerId >= 0, "Game.fromMemento error: activePlayerId < 0");
+
+        for(let i = 0; i < numPlayers; i++) {
+            let id = game.playerIdGenerator.getId();
+            game.addPlayer(new GamePlayer(id), id);
+        }
 
         return game;
     }
@@ -107,9 +119,7 @@ export default class Game implements RequestHandler{
 
     addPlayer(player: Player, id: number) {
         assertTrue(player.hasId(id), "Game.addPlayer error: player does not have id " + id);
-
         this.players.set(id, player);
-        this.numPlayers++;
     }
 
     hasPlayer(id: number) {
