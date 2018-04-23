@@ -11,3 +11,5 @@ export default class UnitToBuildingAttackRequest implements Request {
         return RequestKind.UnitToBuildingAttack;
     }
 }
+
+

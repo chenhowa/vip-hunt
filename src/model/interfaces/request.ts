@@ -12,6 +12,10 @@ export enum RequestKind {
 
     UnitMove,
     UnitToUnitAttack,
-    UnitToBuildingAttack
+    UnitToBuildingAttack,
+
+    ShowBarracksPanel,
+
+    Unknown,
 
 }

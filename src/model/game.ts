@@ -97,14 +97,14 @@ export default class Game implements RequestHandler{
             this.players.delete(req.getId() );
         }
         else if (req.getKind() === RequestKind.UnitToUnitAttack && req instanceof UnitToUnitAttackRequest) {
-            let attacker = this.getUnit(req.attackerId).rep;
-            let target = this.getUnit(req.targetId).rep;
+            let attacker = this.getUnitRep(req.attackerId);
+            let target = this.getUnitRep(req.targetId);
 
             attacker.chase(target);
         }
         else if (req.getKind() === RequestKind.UnitToBuildingAttack && req instanceof UnitToBuildingAttackRequest) {
-            let attacker = this.getUnit(req.attackerId).rep;
-            let target = this.getBuilding(req.targetId).rep;
+            let attacker = this.getUnitRep(req.attackerId);
+            let target = this.getBuildingRep(req.targetId);
             attacker.chase(target);
         }
         else {
@@ -112,23 +112,23 @@ export default class Game implements RequestHandler{
         }
     }
 
-    private getUnit(id: number) {
+    private getUnitRep(id: number) {
         let unit = this.units.get(id)
 
         if(unit === undefined) {
             throw Error("Tried to get undefined unit with id " + id);
         } 
 
-        return unit;
+        return unit.rep;
     }
 
-    private getBuilding(id: number) {
+    private getBuildingRep(id: number) {
         let building = this.buildings.get(id);
         if(building === undefined) {
             throw Error("Tried to get undefined building with id " + id);
         }
 
-        return building;
+        return building.rep;
     }
 
     addBuilding(building: Building, id: number) {
