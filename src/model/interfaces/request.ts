@@ -10,7 +10,9 @@ export enum RequestKind {
     ResourceRemove,
     PlayerRemove,
 
-    UnitMove,
+    Move,
+    Die,
+
     UnitToUnitAttack,
     UnitToBuildingAttack,
 

@@ -17,4 +17,8 @@ export default class MockWadeRepresentation extends WadeRepresentation {
     travelTo(location: Coordinates2D) {
 
     }
+
+    die() {
+        
+    }
 }

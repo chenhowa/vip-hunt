@@ -8,6 +8,11 @@ import "mocha";
 import "sinon";
 import MockDamageable from "../mocks/mock-damageable";
 import MockHarvestable from "../mocks/mock-harvestable";
+import MockRequestHandler from "../mocks/mock-request-handler";
+import DieRequest from "../../src/model/requests/die-request";
+import BuildingRemoveRequest from "../../src/model/requests/building-remove-request";
+import MockWadeRepresentation from "../mocks/mock-wade-representation";
+import MockSceneObject from "../mocks/mock-scene-object";
 
 describe("GameBuilding class unit test", () => {
     it("instantiates correctly", () => {
@@ -35,5 +40,18 @@ describe("GameBuilding class unit test", () => {
         harvestable.amount = 15;
         building.harvest(harvestable);
         expect(harvestable.amount).to.eql(14);
-    })
+    });
+
+    it("dies on request", () => {
+        let building = new GameBuilding(5);
+        let handler = new MockRequestHandler();
+        building.setGame(handler);
+        building.rep = new MockWadeRepresentation(new MockSceneObject());
+        building.handle(new DieRequest() );
+        if(handler.req instanceof BuildingRemoveRequest) {
+            expect(handler.req.getId() ).to.eql(5);
+        } else {
+            expect(true).to.be.false;
+        }
+    });
 });

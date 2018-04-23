@@ -7,6 +7,8 @@ import "sinon";
 import GameUnit from "../../src/model/game-unit";
 import MockDamageable from "../mocks/mock-damageable";
 import MockHarvestable from "../mocks/mock-harvestable";
+import MoveRequest from "../../src/view/requests/move-request";
+import Coordinates2D from "../../src/model/types/coodinates-2d";
 
 
 describe("GameUnit class unit test", () => {
@@ -35,5 +37,23 @@ describe("GameUnit class unit test", () => {
         harvestable.amount = 15;
         unit.harvest(harvestable);
         expect(harvestable.amount).to.eql(14);
-    })
+    });
+
+    it("handles requests to move the unit", () => {
+        let unit = new GameUnit(0);
+        let req = new MoveRequest();
+        let location: Coordinates2D = [12, 12];
+        req.location = location;
+        unit.handle(req);
+        expect(unit.isAt(location)).to.be.true;
+    });
+
+    it("throws when given an invalid location to move the unit", () => {
+        let unit = new GameUnit(0);
+        let req = new MoveRequest();
+        req.location = [-1, -1];
+        expect(function() {
+            unit.handle(req)
+        }).to.throw();
+    });
 });

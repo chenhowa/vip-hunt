@@ -3,19 +3,39 @@ import Damageable from "./interfaces/damageable";
 import Harvestable from "./interfaces/harvestable";
 import Coordinates2D from "./types/coodinates-2d";
 import Representation from "../view/interfaces/representation";
+import RequestHandler from "./interfaces/request-handler";
+import { RequestKind, Request } from "./interfaces/request";
+import DieRequest from "./requests/die-request";
+import BuildingRemoveRequest from "./requests/building-remove-request";
 
 
 
-export default class GameBuilding implements Building {
+export default class GameBuilding implements Building, RequestHandler {
     private damage = 1;
     private health = 0;
     private amountToHarvest = 1;
     private location: Coordinates2D = [0, 0];
+    private game: RequestHandler;
 
     public rep: Representation;
 
     constructor(private id: number) {
 
+    }
+
+    setGame(game: RequestHandler) {
+        this.game = game;
+    }
+
+    handle(req: Request) {
+        if(req.getKind() === RequestKind.Die && req instanceof DieRequest) {
+            this.rep.die();
+            let removeReq = new BuildingRemoveRequest(this.id);
+            this.game.handle(removeReq);
+
+        } else {
+            this.game.handle(req);
+        }
     }
 
     render() {

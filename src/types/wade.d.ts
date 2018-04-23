@@ -12,6 +12,10 @@ declare namespace wade {
     const c_timeStep: number;
     let defaultLayer: number;
 
+    namespace iso {
+        let deleteObject: (obj: SceneObject) => void;
+    }
+
     let onAddToScene: (data?: any) => void;
     let onAnimationEnd: (data?: any) => void;
     let onAnimationStart: (data?: any) => void;
@@ -157,7 +161,13 @@ interface Coordinate {
     y: number
 }
 
+interface IsoData {
+    gridCoords: IsoCoordinate;
+}
+
 interface ISceneObject {
+    iso: IsoData;
+
     addBehavior(behaviorClass: any): any;
     addSprite(sprite: Sprite, offset?: any, index?: number): number;
     clone(posX?: number, posY?: number): SceneObject;
@@ -222,6 +232,7 @@ declare class SceneObject implements ISceneObject {
     constructor( sprites?: Sprite[] | any, behaviors?: any,
                poxX?: number, posY?: number, name?: string);
 
+    iso: IsoData;
     addBehavior(behaviorClass: any): any;
     addSprite(sprite: Sprite, offset?: any, index?: number): number;
     clone(posX?: number, posY?: number): SceneObject;

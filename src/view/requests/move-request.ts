@@ -7,7 +7,7 @@ export default class MoveRequest implements Request {
     public id: number = -1;
 
     getKind() {
-        return RequestKind.UnitMove;
+        return RequestKind.Move;
     }
 
 

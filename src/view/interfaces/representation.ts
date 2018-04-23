@@ -7,5 +7,6 @@ export default interface Representation {
 
     travelTo(location: Coordinates2D);
     chase(target: Representation);
+    die();
     
 }

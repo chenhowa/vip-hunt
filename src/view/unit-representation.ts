@@ -2,11 +2,11 @@ import Coordinates2D from "../model/types/coodinates-2d";
 import WadeRepresentation from "./wade-representation";
 
 import * as Rx from "rxjs";
-import { SceneObjectInterface } from "./interfaces/scene-object-interface";
 import RequestHandler from "../model/interfaces/request-handler";
 import MoveRequest from "./requests/move-request";
 
 import * as _ from "lodash";
+import { SceneObject } from "../types/wade";
 
 
 
@@ -20,7 +20,7 @@ export default class UnitRepresentation extends WadeRepresentation {
     private chaseSubscription: Rx.Subscription = new Rx.Subscription();
     private chaseEvents: Rx.Observable<any> = Rx.Observable.interval(500);s
 
-    constructor(widget: SceneObjectInterface, private unit: RequestHandler) {
+    constructor(widget: SceneObject, private unit: RequestHandler) {
         super();
         this.widget = widget;
     }
