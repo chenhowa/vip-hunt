@@ -6,7 +6,8 @@ import RequestHandler from "../model/interfaces/request-handler";
 import MoveRequest from "./requests/move-request";
 
 import * as _ from "lodash";
-import { SceneObject } from "../types/wade";
+
+declare var SceneObject: any;
 
 
 
@@ -20,9 +21,15 @@ export default class UnitRepresentation extends WadeRepresentation {
     private chaseSubscription: Rx.Subscription = new Rx.Subscription();
     private chaseEvents: Rx.Observable<any> = Rx.Observable.interval(500);s
 
-    constructor(widget: SceneObject, private unit: RequestHandler) {
+    constructor(widget: typeof SceneObject, private unit: RequestHandler) {
         super();
         this.widget = widget;
+    }
+
+    die() {
+        const animName = this.widget.getSprite(0).getCurrentAnimationName();
+        const direction = animName.substr(animName.lastIndexOf('_') + 1);
+        this.widget.playAnimation('Death_iso_' + direction);
     }
 
     travelTo(location: Coordinates2D) {
