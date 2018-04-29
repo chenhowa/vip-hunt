@@ -20,6 +20,10 @@ export default class MockHud implements Hud {
 
     }
 
+    showBackground() {
+        
+    }
+
     showStablesPanel() {
 
     }

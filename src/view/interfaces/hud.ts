@@ -12,7 +12,7 @@ export default interface Hud {
     showSelectedBuilding();
     showSelectedResource();
 
-
+    showBackground();
 
     showMainPanel();
 

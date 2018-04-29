@@ -3,6 +3,7 @@ import ImageMap from './image-map';
 import CostMap from "./cost-map";
 import SpritesMap from './sprites-map';
 import DataMap from './data-map';
+import GameRunner from './game-runner';
 
 declare var App: any;
 declare var wade: any;
@@ -16,7 +17,12 @@ App = function() {
 
        
         //load the map to prove this works.
-        wade.loadScene('../public/large_grass_map.wsc', null, null);
+        wade.loadScene('../public/large_grass_map.wsc', null, () => {
+            let runner = GameRunner.toNewGame(2, 1);
+            runner.play();
+            console.log(runner);
+            console.log("Scene loaded!");
+        });
     };
 
     this.load = function asyncLoading() {
