@@ -17,16 +17,6 @@ enum StreamType {
 
 export default class DefaultUiEventStreamer implements UiEventStreamer {
     private streams: Map<StreamType, Rx.ConnectableObservable<any> > = new Map();
-/*
-    private clickStream: Rx.ConnectableObservable<any>;
-    private mouseMoveStream: Rx.ConnectableObservable<any>;
-    private mouseWheelStream: Rx.ConnectableObservable<any>;
-    private mouseUpStream: Rx.ConnectableObservable<any>;
-    private mouseDownStream: Rx.ConnectableObservable<any>;
-    private keyUpStream: Rx.ConnectableObservable<any>;
-    private keyDownStream: Rx.ConnectableObservable<any>;
-*/
-
     private subscriptions: Array<Rx.Subscription> = new Array();
 
     constructor() {
@@ -42,28 +32,6 @@ export default class DefaultUiEventStreamer implements UiEventStreamer {
             let subscription = value.connect();
             this.addSubscription(subscription);
         })
-/*
-        this.clickStream = this.createStream('onClick');
-        this.addSubscription(this.clickStream.connect());
-
-        this.mouseMoveStream = this.createStream('onMouseMove');
-        this.addSubscription(this.mouseMoveStream.connect());
-
-        this.mouseWheelStream = this.createStream('onMouseWheel');
-        this.addSubscription(this.mouseWheelStream.connect());
-
-        this.mouseUpStream = this.createStream('onMouseUp');
-        this.addSubscription(this.mouseUpStream.connect());
-
-        this.mouseDownStream = this.createStream('onMouseDown');
-        this.addSubscription(this.mouseDownStream.connect());
-
-        this.keyUpStream = this.createStream('onKeyUp');
-        this.addSubscription(this.keyUpStream.connect());
-
-        this.keyDownStream = this.createStream('onKeyDown');
-        this.addSubscription(this.keyDownStream.connect());
-*/
     }
 
     private createStream(eventName: string) {

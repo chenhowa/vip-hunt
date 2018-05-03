@@ -78,22 +78,21 @@ export default class DefaultCamera implements Camera {
         }
     }
 
-
     allowKeyboardControl() {
-        this.streamer.getKeyUpStream().subscribe({
+        this.streamer.getKeyDownStream().subscribe({
             next: (data) => {
-                this.keyUp();
+                this.keyPressed();
             }
         });
 
-        this.streamer.getKeyDownStream().subscribe({
+        this.streamer.getKeyUpStream().subscribe({
             next: (data) => {
-                this.keyDown();
+                this.keyReleased();
             }
         });
     }
 
-    private keyDown() {
+    private keyPressed() {
         if (Keys.opposingKeysPressed() ) {
             this.movement.stop();
             return;
@@ -145,7 +144,7 @@ export default class DefaultCamera implements Camera {
         return wade.isKeyDown(Keys.down());
     }
 
-    private keyUp () {
+    private keyReleased () {
         if ( Keys.noKeysPressed() ) {
             this.movement.stop();
             return;
@@ -200,7 +199,7 @@ class CameraMovement {
 
     private calcZoomDestination(factor: number) {
         const destination = wade.getCameraPosition();
-        destination.z += (factor / factor) * 0.1;
+        destination.z += (factor / Math.abs(factor) ) * 0.1;
 
         return destination;
     }
