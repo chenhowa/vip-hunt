@@ -30,8 +30,7 @@ const BuildHud = {
     //  @ layerId: an integer that indicates which WADE layer to draw on. Recall that
     //      a smaller number (down to 1) means the resourcePanel will be drawn on
     //      TOP of other elements on layers with larger numbers.
-    resourcePanel: (layerId: number) => {
-        const global = wade.getSceneObject('global');
+    resourcePanel: (totalFood: number, totalStone: number, totalWood: number) => {
         const font = '10px Verdana';
         const color = 'black';
         const alignment = 'center';
@@ -41,37 +40,38 @@ const BuildHud = {
 
         let y = (wade.getScreenHeight() / 2) - 210;
         let x = (wade.getScreenWidth() / 2) - 50;
-        const stone = buildIcon(ImageMap.stoneIcon, width, height, x, y, layerId);
+        const stone = buildIcon(ImageMap.stoneIcon, width, height, x, y, HudLayer.MAIN);
         stone.setAlignment('right', 'bottom');
         let y2 = y;
         let x2 = x + 15;
-        const stoneCount = BuildHud.buildText(global.state.getPlayer().stone.toString(),
-                                font, color, alignment, x2, y2, layerId);
+        const stoneCount = BuildHud.buildText(stone,
+                                font, color, alignment, x2, y2, HudLayer.MAIN);
         stoneCount.setAlignment('right', 'bottom');
 
         y = y;
         x = x - 100;
-        const wood = buildIcon(ImageMap.woodIcon, width, height, x, y, layerId);
+        const wood = buildIcon(ImageMap.woodIcon, width, height, x, y, HudLayer.MAIN);
         wood.setAlignment('right', 'bottom');
         y2 = y;
         x2 = x + 20;
-        const woodCount = BuildHud.buildText(global.state.getPlayer().wood.toString(),
-                                font, color, alignment, x2, y2, layerId);
+        const woodCount = BuildHud.buildText(wood,
+                                font, color, alignment, x2, y2, HudLayer.MAIN);
         woodCount.setAlignment('right', 'bottom');
 
         y = y;
         x = x - 100;
-        const food = buildIcon(ImageMap.foodIcon, width, height, x, y, layerId);
+        const food = buildIcon(ImageMap.foodIcon, width, height, x, y, HudLayer.MAIN);
         food.setAlignment('right', 'bottom');
         y2 = y;
         x2 = x + 15;
-        const foodCount = BuildHud.buildText(global.state.getPlayer().food.toString(),
-                                font, color, alignment, x2, y2, layerId);
+        const foodCount = BuildHud.buildText(food,
+                                font, color, alignment, x2, y2, HudLayer.MAIN);
         foodCount.setAlignment('right', 'bottom');
 
         const all = [stone, wood, food, stoneCount, woodCount, foodCount];
         _.forEach(all, (item) => {
             item.dontSave = true;
+            item.setVisible(false);
         });
 
         return all;
@@ -100,8 +100,8 @@ const BuildHud = {
     //
     // parameters:
     //  @ layer: the WADE layer to draw the panel on.
-    mainPanel: (layer: number) => {
-        const buildingSprite = new Sprite(ImageMap.buildingIcon, layer);
+    mainPanel: () => {
+        const buildingSprite = new Sprite(ImageMap.buildingIcon, HudLayer.MAIN);
         buildingSprite.setSize(50, 50);
 
         //Add building icon to screen.
@@ -114,27 +114,30 @@ const BuildHud = {
         const x = (-1 * wade.getScreenWidth() / 2) + 200;
         const y = (wade.getScreenHeight() / 2) - 100;
         const menu = BuildHud.buildText('Menu', '16px Verdana', 'black', 'center',
-                                x, y, layer);
+                                x, y, HudLayer.MAIN);
         menu.setAlignment('left', 'bottom');
 
         const all = [building, menu];
         _.forEach(all, (item) => {
+            item.setVisible(false);
             item.dontSave = true;
         });
 
         return all;
     },
-    menuPanel: (layer: number) => {
+    menuPanel: () => {
         const font = '16px Verdana';
         const color = 'black';
         const alignment = 'center';
 
-        const save = BuildHud.buildText('Save', font, color, alignment, 0, -125, layer);
-        const resume = BuildHud.buildText('Resume', font, color, alignment, 0, -25, layer);
-        const quit = BuildHud.buildText('Quit', font, color, alignment, 0, 75, layer);
+        const save = BuildHud.buildText('Save', font, color, alignment, 0, -125, HudLayer.MAIN);
+        const resume = BuildHud.buildText('Resume', font, color, alignment, 0, -25, HudLayer.MAIN);
+        const quit = BuildHud.buildText('Quit', font, color, alignment, 0, 75, HudLayer.MAIN);
+        const background = BuildHud.menuBackground();
 
-        const all = [save, resume, quit];
+        const all = [save, resume, quit, background];
         _.forEach(all, (item) => {
+            item.setVisible(false);
             item.dontSave = true;
         });
 
@@ -171,8 +174,8 @@ const BuildHud = {
 
         return all;
     },
-    menuBackground: (layer: number) => {
-        const scroll = buildIcon(ImageMap.scroll, 200, 500, 0, 0, layer);
+    menuBackground: () => {
+        const scroll = buildIcon(ImageMap.scroll, 200, 500, 0, 0, HudLayer.BACKGROUND);
         scroll.getSprite(0).usePixelPerfectMouseEvents(255);
 
         scroll.onMouseDown = prevent_propagation;
@@ -181,6 +184,7 @@ const BuildHud = {
         wade.addEventListener(scroll, 'onClick');
 
         scroll.dontSave = true;
+        scroll.setVisible(false);
 
         return scroll;
     },
@@ -407,7 +411,7 @@ const BuildHud = {
         background.dontSave = true;
         background.setVisible(false);
 
-        return background;
+        return [background];
 
     },
     unitStats: (unitSceneObject, layer: number) => {
