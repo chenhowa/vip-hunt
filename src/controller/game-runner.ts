@@ -12,16 +12,16 @@ import DefaultCamera from "./default-camera";
 import * as Rx from "rxjs";
 import DefaultUiEventStreamer from "./default-ui-event-streamer";
 import UiEventStreamer from "./interfaces/ui-event-streamer";
+import GameInfo from "../model/game-info";
 
 
 
 export default class GameRunner implements RequestHandler {
-    private hud: Hud = new DefaultHud();
+    private hud: Hud;
     private camera: Camera;
     private game: Game;
 
     private userEventHandler: UiEventStreamer;
-    private keyDownStream: Rx.Observable<any>;
 
     private constructor() {
         this.userEventHandler = new DefaultUiEventStreamer()
@@ -30,20 +30,25 @@ export default class GameRunner implements RequestHandler {
     }
 
     play() {
+        this.initializeGame();
         this.initializeCamera();
         this.initializeHud();
     }
 
-    initializeCamera() {
+    private initializeGame() {
+        // TODO : Get numplayers and settings from the server!
+        this.game = Game.withPlayers(1 , 2 );
+    }
+
+    private initializeCamera() {
         this.camera.setScreenSize();
         this.camera.allowMouseControl();
         this.camera.allowKeyboardControl();
     }
 
-    initializeHud() {
-        this.hud.showBackground();
-        //this.hud.showMainPanel();
-        //this.hud.showPlayerResources();
+    private initializeHud() {
+        this.hud = new DefaultHud(new GameInfo(this.game));
+        this.hud.display();
     }
 
 
@@ -73,7 +78,7 @@ export default class GameRunner implements RequestHandler {
 
     handle(req: Request) {
         if(req.getKind() === RequestKind.ShowBarracksPanel && req instanceof ShowBarracksPanelRequest) {
-            this.hud.showBarracksPanel();
+            this.hud.handle(req);
         } else {
             // If the GameRunner cannot handle a request, our code has a problem
             throw Error("GameRunner cannot handle this request");

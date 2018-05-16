@@ -8,9 +8,24 @@ export default class GamePlayer implements Player {
     private buildings: Map<number, number> = new Map();
     private activeUnits: number[] = new Array();
     private activeBuildings: number[] = new Array();
-    
-    constructor(private id: number) {
 
+    private stone: number;
+    private wood: number;
+    private food: number;
+    
+    constructor(private id: number, startingResources: any) {
+        this.stone = startingResources.stone;
+        this.food = startingResources.food;
+        this.wood = startingResources.wood;
+    }
+
+    getResources(): Map<string, number> {
+        let resources: Map<string, number> = new Map();
+        resources.set("stone", this.stone);
+        resources.set("wood", this.wood);
+        resources.set("food", this.food);
+
+        return resources;
     }
 
     hasUnit(id: number) {

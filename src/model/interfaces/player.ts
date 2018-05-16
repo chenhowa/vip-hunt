@@ -20,4 +20,5 @@ export default interface Player extends Identifiable {
     removeBuilding(id: number);
     hasNumUnits(num: number);
     hasNumBuildings(num: number);
+    getResources(): Map<string, number>;
 }

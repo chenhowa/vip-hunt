@@ -12,6 +12,7 @@ dist/js/bindDependencies.*
 dist/js/custom_types/*
 dist/js/view/*
 dist/js/utils/*
+dist/js/server/*
 src/controller/minimap/*
 *~
 coverage/*

@@ -35,7 +35,12 @@ export default class Game implements RequestHandler{
 
         for(let i = 0; i < numPlayers; i++) {
             let id = game.playerIdGenerator.getId();
-            game.addPlayer(new GamePlayer(id), id);
+            game.addPlayer(new GamePlayer(id, {
+                stone: 10,
+                food: 10,
+                wood: 10
+                
+            }), id);
         }
 
         return game;
@@ -52,10 +57,26 @@ export default class Game implements RequestHandler{
 
         for(let i = 0; i < numPlayers; i++) {
             let id = game.playerIdGenerator.getId();
-            game.addPlayer(new GamePlayer(id), id);
+            game.addPlayer(new GamePlayer(id, {
+                stone: 10,
+                food: 10,
+                wood: 10
+            }), id);
         }
 
         return game;
+    }
+
+    getActivePlayerResources(): Map<string, number> {
+        return this.getActivePlayer().getResources();
+    }
+
+    getActivePlayer(): Player {
+        let activePlayer = this.players.get(this.activePlayerId);
+        if(activePlayer) {
+            return activePlayer;
+        }
+        throw Error("Active player not found!");
     }
 
     hasActivePlayer(id: number) {
